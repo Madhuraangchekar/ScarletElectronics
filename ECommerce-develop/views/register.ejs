@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Register to ScarletElectronics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+</head>
+
+<body>
+    <%- include('Common/header2.ejs') %>
+
+    <div class="content">
+
+    <div align="center">
+        <br> <br>
+        <h1 class="text-center mx-auto">Welcome to the ScarletElectronics</h1>
+        <br> <br> <br>
+        <h2 class="text-center">User Register Form</h2>
+        <form id="reg" name="registration" method="POST" action="/users/registerUser"
+            onSubmit="return formValidation();">
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="name" class="form-label text-left">Name</label> <input type="text"
+                    class="form-control text-left" id="name" name="name" onchange="allLetter();" required>
+            </div>
+            <br>
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="pseudoName" class="form-label text-left">Pseudo
+                    Name:</label> <input type="text" class="form-control text-left" id="pseudoName" name="pseudoName"
+                    required>
+                <div id="emailHelp" class="form-text">This Name will be used
+                    in Public Reports (Bidding History)</div>
+            </div>
+            <br>
+            <div class="col-md-3 align-self-center mx-auto">
+                <!-- <label for="emailId" class="form-label text-left">Email
+                        address</label> <input type="email" class="form-control text-left"
+                        id="emailId" aria-describedby="emailHelp" name="emailId"
+                        onchange="validateEmail('a')" required> -->
+
+                <label for="emailId" class="form-label">Email:</label> <input type="email" class="form-control"
+                    id="emailId" name="emailId" name="email" placeholder="Enter Your Email" onchange="validateEmail();">
+                <div id="emailHelp" class="form-text">We'll never share your
+                    email with anyone else.</div>
+            </div>
+            <br>
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="password" class="form-label text-left">Password</label>
+                <input type="password" class="form-control text-left" id="password" name="password"
+                    onchange="passid_validation(7,12);" required>
+                <p style="font-size: small;" class="form-text">Password should contains 7 to 12 characters, atleast one
+                    Capital letter, atleast one digit, atleast one special character</p>
+            </div>
+            <br>
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="cpassword" class="form-label text-left">Confirm
+                    Password</label> <input type="password" class="form-control text-left" id="cpassword"
+                    name="cpassword" onchange="cpassid_validation();" required>
+            </div>
+            <br>
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="phone_nr" class="form-label">Contact Number :</label> <input type="text"
+                    class="form-control text-left" id="phone_nr" name="phone_nr" onchange="phoneNumberCheck()" required>
+            </div>
+            <br>
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="address_line1" class="form-label text-left">Address Line 1</label> <input type="text"
+                    class="form-control text-left" id="address_line1" name="address_line1" required>
+            </div>
+            <br>
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="address_line2" class="form-label text-left">Address Line 2</label> <input type="text"
+                    class="form-control text-left" id="address_line2" name="address_line2" required>
+            </div>
+            <br>
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="address_city" class="form-label text-left">City</label> <input type="text"
+                    class="form-control text-left" id="address_city" name="address_city" required>
+            </div>
+            <br>
+            <div class="row">
+                <div class="align-self-center mx-auto">
+                    <div class="col col-md-1 mx-auto">
+                        <!-- <label for="address_state_code" class="form-label text-left">State</label> <input type="text"
+                            class="form-control text-left" id="address_state_code" name="address_state_code" required> -->
+                        <div class="form-group">
+                            <label for="address_state_code">State</label>
+                            <select class="form-control" id="address_state_code" name="address_state_code" required>
+                                <option>AL</option>
+                                <option>AK</option>
+                                <option>AZ</option>
+                                <option>AR</option>
+                                <option>CA</option>
+                                <option>CO</option>
+                                <option>CT</option>
+                                <option>DE</option>
+                                <option>FL</option>
+                                <option>GA</option>
+                                <option>HI</option>
+                                <option>ID</option>
+                                <option>IL</option>
+                                <option>IN</option>
+                                <option>IA</option>
+                                <option>KS</option>
+                                <option>KY</option>
+                                <option>LA</option>
+                                <option>ME</option>
+                                <option>MD</option>
+                                <option>MA</option>
+                                <option>MI</option>
+                                <option>MN</option>
+                                <option>MS</option>
+                                <option>MO</option>
+                                <option>MT</option>
+                                <option>NE</option>
+                                <option>NV</option>
+                                <option>NH</option>
+                                <option>NJ</option>
+                                <option>NM</option>
+                                <option>NY</option>
+                                <option>NC</option>
+                                <option>ND</option>
+                                <option>OH</option>
+                                <option>OK</option>
+                                <option>OR</option>
+                                <option>PA</option>
+                                <option>RI</option>
+                                <option>SC</option>
+                                <option>SD</option>
+                                <option>TN</option>
+                                <option>TX</option>
+                                <option>UT</option>
+                                <option>VT</option>
+                                <option>VA</option>
+                                <option>WA</option>
+                                <option>WV</option>
+                                <option>WI</option>
+                                <option>WY</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col col-md-2 mx-auto">
+                        <label for="address_zipcode" class="form-label text-left">Zip Code</label> <input type="text"
+                            class="form-control text-left" id="address_zipcode" name="address_zipcode" required>
+                    </div>
+                </div>
+            </div>
+            <br> <br>
+            <div class="col-md-2 text-center mx-auto">
+                <div class="g-recaptcha" data-sitekey="6Lffbu8oAAAAAIxa23ZCnXKjsEXDijpsEfiiwcU_"></div>
+            </div>
+            <p id="err_para" style="color: red;"></p><br>
+            <div class="col-md-3 text-center mx-auto">
+                <button type="submit" id="submit_button" class="btn btn-primary align-self-center">Submit</button>
+            </div>
+        </form>
+    </div>
+    </form>
+    </div>
+    </div>
+    <%- include('Common/footer.ejs') %>
+
+
+    <!-- <script src="formValidation.js"></script> -->
+    <script type="text/javascript">
+
+        // document.getElementById('reg').addEventListener('submit', function (event) {
+        //     event.preventDefault();
+
+        //     const recaptchaResponse = document.querySelector('[name="g-recaptcha-response"]').value;
+
+        //     // Validate CAPTCHA
+        //     if (!recaptchaResponse) {
+        //         alert('Please complete the CAPTCHA before AJAX.');
+        //         return;
+        //     }
+
+        //     // Collect form data
+        //     const formData = new FormData(event.currentTarget);
+
+        //     fetch('/users/registerUser', {
+        //         method: 'POST',
+        //         body: formData
+        //     })
+        //         .then(response => response.json()) // Always expect a JSON response
+        //         .then(data => {
+        //             if (data.success) {
+        //                 // Redirect to the specified URL
+        //                 window.location.href = data.redirectUrl || '/users/login';
+        //             } else {
+        //                 // Display the error message
+        //                 alert(data.message);
+        //             }
+        //         })
+        //         .catch(error => {
+        //             console.error('Error:', error);
+        //             alert('An unexpected error occurred. \n',error);
+        //         });
+        // });
+        document.getElementById('reg').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const recaptchaResponse = document.querySelector('[name="g-recaptcha-response"]').value;
+
+            // Validate CAPTCHA
+            if (!recaptchaResponse) {
+                alert('Please complete the CAPTCHA before AJAX.');
+                return;
+            }
+
+            // Collect form data
+            const formData = new FormData(event.currentTarget);
+
+            fetch('/users/registerUser', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    // Check if the response is not ok (e.g., status code 400, 409, etc.)
+                    if (!response.ok) {
+                        // Convert the response to JSON and then throw an error with the backend's message
+                        return response.json().then(data => {
+                            throw new Error(data.message);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // Redirect to the specified URL
+                        alert(data.message);
+                        window.location.href = data.redirectUrl || '/users/login';
+                    }
+                })
+                .catch(error => {
+                    // This will now catch errors with specific messages from the backend
+                    console.error('Error:', error);
+                    alert(error.message);
+                });
+        });
+
+    </script>
+    <script>
+        function phoneNumberCheck() {
+            var validator = /^\d{10}$/;
+            var phone_num = document.getElementById("phoneNr").value;
+
+            if (!validator.test(phone_num)) {
+                alert("Phone must contain only 10 Numbers.")
+                return false;
+            }
+            return true;
+        }
+
+
+        function passid_validation(mx, my) {
+            var strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/;
+            var passid = document.getElementById("password").value;
+
+            var passid_len = passid.length;
+            if (passid_len == 0) {
+                alert("Password should not be empty");
+                //document.registration.passid.focus();
+                return false;
+            }
+            else if (passid_len >= my || passid_len < mx) {
+                alert("Password Length should be between " + mx + " to " + my);
+                //document.registration.passid.focus();
+                return false;
+            }
+            else if (!strongPasswordRegex.test(passid)) {
+                alert("Password not satisfy all the criteria");
+                //document.registration.passid.focus();
+                return false;
+            }
+            return true;
+        }
+
+
+
+        function allLetter() {
+            var uname = document.getElementById("name");
+
+            //var uname = document.getElementById('name').value;
+            console.log(uname);
+
+            var letters = /^[a-zA-Z ]*$/;
+            if (uname.value.match(letters)) {
+                return true;
+            }
+            alert('Username must have alphabet characters only');
+            // document.registration.name.focus();
+            return false;
+        }
+
+
+        function validateEmail() {
+            var uemail = document.getElementById('emailId').value;
+            console.log(uemail);
+
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (uemail.match(mailformat)) {
+                return true;
+            }
+            alert("You have entered an invalid email address!");
+            //document.registration.uemail.focus();
+            return false;
+        }
+
+
+        function cpassid_validation() {
+            var passid = document.getElementById('password').value;
+            var cpassid = document.getElementById('cpassword').value;
+
+            if (passid == cpassid) {
+                return true
+            }
+            alert("Password and Confirm Password do not match!");
+            return false;
+        }
+
+        function formValidation() {
+            var uemail = document.getElementById("emailId");
+            var uname = document.getElementById("name");
+            var passid = document.getElementById("password");
+            var cpassid = document.getElementById("cpassword");
+            var err_para = document.getElementById("err_para");
+
+            if (uemail.value == '' || uname.value == '' || passid.value == '' || cpassid.value == '') {
+                alert("You have missed mandatory field(s)");
+                return false;
+            }
+
+            if (allLetter() && validateEmail() && passid_validation(7, 12) && cpassid_validation() && phoneNumberCheck()) {
+                console.log("Insise");
+                return true;
+            }
+            err_para.innerHTML = "Please Fill all the details carefully!!"
+            return false;
+        }
+
+
+        // Kunjan Edit: 04/02/2023
+
+
+        // const regForm = document.getElementById("reg");
+        // const submitButton = document.getElementById("submit_button");
+        // const errPara = document.getElementById("err_para");
+
+        // regForm.addEventListener("submit", function (event) {
+        //     if (!formValidation()) {
+        //         event.preventDefault(); // Prevent form submission
+        //         errPara.textContent = "Please fix the validation errors.";
+        //         submitButton.disabled = true; // Optionally, disable the submit button
+        //     }
+        // });
+    </script>
+</body>
+
+</html>

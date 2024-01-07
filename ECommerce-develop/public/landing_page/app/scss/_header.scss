@@ -1,0 +1,152 @@
+.header {
+    
+    nav {
+        position: relative;
+        background-color: $white;
+        padding-top :.6rem;
+        padding-bottom: 0.2rem;
+    }
+    // &__logo {
+    //     img {
+
+    //     }
+    // }
+
+    //Hamburger open styles
+    &.open {  //helper function for opening hamburger menu
+        .overlay {
+            display:blank;
+        }
+
+        .header__toggle{
+            > span:first-child {
+                transform: rotate(45deg);
+            }
+    
+            > span:nth-child(2) {
+                opacity: 0;
+                
+            }
+            > span:last-child {
+                transform: rotate(-45deg);
+            }
+        }
+    }
+
+    .overlay {
+        opacity: 0;
+        position: fixed;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        bottom: 0px;
+        background-image: linear-gradient($brandBlack, transparent);
+    }
+
+    &__toggle {  // display at small screen size
+        > span {
+            display: block;
+            width: 30px;
+            height: 2px;
+            background-color: $offBlack;
+            transition: all 300ms ease-in-out;
+            transform-origin: 5px 1px;
+
+            &:not(:last-child) {
+                margin-bottom: 5px;
+            }
+        }
+    }
+
+    &__menu{
+        position: absolute;
+        background: $white;
+        padding: 1.625rem;
+        border-radius: 5px;
+        margin-top: 1.5rem;
+        width: calc(100% - 3rem);
+        left: 50%;
+        transform: translateX(-50%);
+
+        a{
+            display: block;
+            padding: 0.625rem;
+            color: $brandBlack;
+            text-align: center;
+
+            &:hover {
+                color: $jasper;
+
+                &::before {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    
+    &__links {
+        a {
+            position: relative;
+            font-size: $font-sml;
+            color: $offBlack;
+            transition: color 300ms ease-in-out;
+
+            &:not(:last-child) {
+                margin-right: 32px;
+            }
+
+            &::before {
+                content: "";
+                display: block;
+                position: absolute;
+                height: 5px;
+                left: 0;
+                right: 0;
+                bottom: -15px;
+                background: $brandRed;
+                opacity: 0;
+                transition: opacity 300ms ease-in-out;
+            }
+
+            &:hover {
+                color: $jasper;
+
+                &::before {
+                    opacity: 1;
+                }
+            }
+        }    
+    }
+
+    &__cart {
+        margin-left: 45rem;
+        &__btn{
+            width: 1rem;
+            height: 1rem;
+            border: $brandRed 2px;
+            background: $brandWhite;
+            border-radius: 50%;
+        }
+
+        &__icon{
+            width: 1.6rem;
+            height: 1.675rem;
+        }
+    }
+
+    &__cta {
+        color: $brandWhite;
+        min-width: 9rem;
+        padding: .7rem 1.875rem;
+        background: $brandRed;
+        font-size: $font-sml;
+        text-align: center;
+        opacity: 1;
+        transition: opacity 300ms ease-in-out;
+
+        &:hover {
+            opacity: .7;
+        }
+    }
+}
+

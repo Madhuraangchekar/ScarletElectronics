@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sales Report Dashboard</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" href="../public/landing_page/app/scss/style.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+</head>
+
+<body>
+    <%- include('Common/cr_header2.ejs') %>
+
+        <div align="center">
+            <h1 class=" text-center mx-auto">Sales Report Dashboard</h1>
+            <!-- <p>Welcome, <%= username %>
+            </p> -->
+            <button id="loadSalesReport" class="btn btn-primary">View Sales Report</button>
+            <button id="loadCustomerPurchaseHistory" class="btn btn-primary">Customer Purchase History Report</button>
+        </div>
+<br><br>
+        <div class="container">
+            <div id="salesReportContainer" style="display: none;">
+                <h2 class="text-left mx-auto">Sales Report</h2>
+                <table class="table table-bordered" id="salesReportTable">
+                    <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Product Name</th>
+                            <th>Total Items Sold</th>
+                            <th>Total Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sales report data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="customerPurchaseHistoryContainer" style="display: none;">
+                <h2 class=" text-left mx-auto">Customer Purchase History Report</h2>
+                <table class="table table-bordered" id="customerPurchaseHistoryTable">
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Customer Name</th>
+                            <th>Item ID</th>
+                            <th>Product Name</th>
+                            <th>Number of Purchases</th>
+                            <th>Total Spent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Customer Purchase History data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Include jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Include DataTables JavaScript -->
+        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+
+        <script>
+            
+            $(document).ready(function () {
+                loadSalesReport();
+                function loadSalesReport() {
+                $.ajax({
+                    url: '/reports/sales-report-data',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        salesReportTable.clear().draw();
+                        data.data.forEach(function (item) {
+                            salesReportTable.row.add([
+                                item.itemId,
+                                item.productName,
+                                item.totalItemsSold,
+                                '$' + item.totalRevenue.toFixed(2)
+                            ]).draw(false);
+                        });
+                        $('#salesReportContainer').show();
+                        $('#customerPurchaseHistoryContainer').hide();
+                    },
+                    error: function (error) {
+                        $('#salesReportContainer').html('<p>Error loading sales report.</p>');
+                    }
+                });
+            }
+
+                var salesReportTable = $('#salesReportTable').DataTable({
+                    paging: true,
+                    searching: true,
+                    // Add any additional options as needed
+                });
+
+                var customerPurchaseHistoryTable = $('#customerPurchaseHistoryTable').DataTable({
+                    paging: true,
+                    searching: true,
+                    // Add any additional options as needed
+                });
+
+                $('#loadSalesReport').click(function () {loadSalesReport()
+                });
+
+                $('#loadCustomerPurchaseHistory').click(function () {
+                    $.ajax({
+                        url: '/reports/customer-purchase-history-data',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            customerPurchaseHistoryTable.clear().draw();
+                            data.data.forEach(function (item) {
+                                customerPurchaseHistoryTable.row.add([
+                                    item.userId,
+                                    item.customerName,
+                                    item.itemId,
+                                    item.productName,
+                                    item.numberOfPurchases,
+                                    '$' + item.totalSpent.toFixed(2)
+                                ]).draw(false);
+                            });
+                            $('#customerPurchaseHistoryContainer').show();
+                            $('#salesReportContainer').hide();
+                        },
+                        error: function (error) {
+                            $('#customerPurchaseHistoryContainer').html('<p>Error loading Customer Purchase History report.</p>');
+                        }
+                    });
+                });
+            });
+        </script>
+</body>
+
+</html>

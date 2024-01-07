@@ -1,0 +1,108 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
+<!-- Navbar -->
+<nav class="navbar sticky-top navbar-light bg-light">
+	<div class="container-fluid align-right">
+		<div class="nav-item">
+			<form action="/item-listing/listings" method="get">
+				<button type="submit" class="btn btn-primary">Home</button>
+			</form>
+		</div>
+		<!-- <div class="nav-item">
+			<form action="/users/support" method="get">
+				<button type="submit" class="btn btn-primary">Support
+
+				</button>
+			</form>
+		</div> -->
+
+
+		<% if (username) { %>
+		<ul class="nav">
+			<li class="nav-item">
+				<h4>Welcome <%= username %>! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+			</li>
+			<li class="nav-item">
+				<form action="/users/profile" method="get">
+					<button type="submit" class="btn btn-primary">
+						Profile
+					</button>
+				</form>
+			</li>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<li class="nav-item">
+				<form action="/users/support" method="get">
+					<button type="submit" class="btn btn-primary">
+						Support
+					</button>
+				</form>
+			</li>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<li class="nav-item">
+				<form action="/users/logout" method="get">
+					<button type="submit" class="btn btn-primary">
+						Logout
+					</button>
+				</form>
+			</li>
+
+		</ul>
+		<% } else { %>
+		<ul class="nav">
+			<li class="nav-item">
+				<form action="/users/login" method="get">
+					<button type="submit" class="btn btn-primary">
+						Sign In
+					</button>
+				</form>
+			</li>
+		</ul>
+		<% } %>
+	</div>
+</nav>
+
+
+
+<!-- <header class = "header">
+    <div class="overlay has-fade"></div>
+
+    <nav class="container flex flex-ai-c flex-jc-sb">
+      <a href="/landing_page" class="header__logo">
+        <img src="../../public/landing_page/images/logo_med.svg" alt="scarletElectronics" 
+        >
+      </a>
+
+      <a id="btnHamburger" class="header__toggle hide-for-desktop " >
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+
+      <div class="header__links hide-for-mobile">
+        <a href="#">Home</a>
+        <a href="#">Catalogue</a>
+        <a href="#">Deals</a>
+        <a href="#">Services</a>
+      </div>
+
+      <div class="header__cart hide-for-mobile hearder__cart__btn flex flex-jc-c flex-ai-c"> 
+        <button href="#" class="hearder__cart__btn flex flex-jc-c flex-ai-c"><img class="header__cart__icon" src="../../public/landing_page/images/cart.png" alt="shopping cart"></button>
+      </div>
+
+      <form action="/users/login" method="get">
+        <button type="submit" class="button header__cta hide-for-mobile">Register/ Login</button>
+      </form>
+
+    </nav>
+
+    <div class="header__menu has-fade hide-for-desktop">
+      <a href="#">Home</a>
+      <a href="#">Catalogue</a>
+      <a href="#">Deals</a>
+      <a href="#">Services</a>
+      <a href="#">Register</a>
+    </div>
+
+</header> -->

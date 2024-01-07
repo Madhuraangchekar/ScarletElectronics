@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1" />
+		<title>Seller Listing Page</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+			type="text/javascript"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400&display=swap"
+			rel="stylesheet" />
+
+		<link
+			rel="stylesheet"
+			href="../public/landing_page/app/scss/style.css" />
+		<style>
+			.attribution {
+				font-size: 11px;
+				text-align: center;
+			}
+			.attribution a {
+				color: hsl(228, 45%, 44%);
+			}
+			.column1 {
+				max-width: 20px; /* Adjust the max-width as needed */
+				max-height: 20px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.column2 {
+				max-width: 150px; /* Adjust the max-width as needed */
+				max-height: 20px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.column3 {
+				max-width: 40px; /* Adjust the max-width as needed */
+				max-height: 20px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		</style>
+	</head>
+
+	<body>
+		<%- include('Common/header2.ejs') %>
+
+		<div class="container mt-5" id="product-div-main">
+			<h2 class="text-danger text-center" id="product-name-header">
+				<!-- product.name %>-->
+			</h2>
+
+			<div class="row mt-5" id="product-div-details">
+				<div class="col-md-5" id="product-image-div">
+					<img src="https://drive.google.com/uc?export=view&id=" style='height: 100%; width: 100%; object-fit: contain' alt="Image Unavailable">
+	
+				</div>
+	
+				<div class="col-md-7" id="product-div-2">
+					<div class="row mb-3" id="product-div-rating">
+						<div class="star-rating" id="star-rating-id">
+							<span class="star">&#9733;</span>
+							<span class="star">&#9733;</span>
+							<span class="star">&#9733;</span>
+							<span class="star">&#9733;</span>
+							<span class="star">&#9733;</span>
+						</div>
+					</div>
+					<div class="row mb-3" id="product-div-description">
+						<p><!--= product.description %>--></p>
+					</div>
+	
+					<div id ="product-div-specifications">
+	
+					</div>
+	
+					<div class="row" id="product-div-listings">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">Seller</th>
+									<th scope="col">Price</th>
+									<th scope="col">Add to Cart</th>
+								</tr>
+							</thead>
+							<tbody id="product-div-listings-list">
+								
+							</tbody>
+						</table>
+					</div>
+	
+					<div class="row">
+						<div class="col-md-3">
+							<label for="quantity">Quantity:</label>
+						</div>
+						<div class="col-md-3">
+							<input type="number" id="quantity-input" name="quantity" min="0" max="0" class="form-control">
+						</div>
+					</div>
+					<button class="btn btn-primary add-to-cart-btn login-check-element">Add Selected Item to Cart</button>
+				</div>
+			</div>
+	
+			<br><br><br><br>
+	
+			<div class="mt-5">
+				<h2>Reviews</h2>
+				<br />
+				<div id="item-review" name="item-review">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Username</th>
+								<th>Comment</th>
+								<th>Rating</th>
+							</tr>
+						</thead>
+						<tbody id="item-review-table">
+							<tr></tr>
+						</tbody>
+					</table>
+				</div>
+				<br /><br /><br /><br />
+				<div class="col-md-3 align-self-center mx-auto">
+					<label for="commentbox" class="form-label text-left"
+						>Your Review
+					</label>
+					<div id="item-review-box" name="item-review-box">
+						<input
+							type="text"
+							class="form-control text-left"
+							id="item-review-input"
+							name="item-review-input"
+							required />
+					</div>
+					<div id="rating-box" name="rating-box">
+						<select
+							class="form-control text-left"
+							id="rating"
+							name="rating"
+							required>
+							<option value="">Select a rating</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</div>
+
+					<option></option>
+				</div>
+				<div class="col-md-3 text-center mx-auto">
+					<button
+						type="submit"
+						id="edit_button"
+						class="btn btn-primary align-self-center">
+						Edit
+					</button>
+					<button
+						type="submit"
+						id="delete_button"
+						class="btn btn-primary align-self-center">
+						Delete
+					</button>
+				</div>
+			</div>
+
+			<div class="mt-5">
+				<h2>Recommendations</h2>
+				<br />
+				<div id="recommendations" name="recommendations">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Item Name</th>
+								<th>Item Description</th>
+								<th>Link</th>
+							</tr>
+						</thead>
+						<tbody id="recommendations-table">
+							<tr></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<br><br>
+
+		<%- include('Common/footer.ejs') %>
+
+		<script>
+			// Function to retrieve URL parameters by name
+			function getParameterByName(name, url) {
+				if (!url) url = window.location.href;
+				name = name.replace(/[\[\]]/g, "\\$&");
+				var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+					results = regex.exec(url);
+				if (!results) return null;
+				if (!results[2]) return "";
+				return decodeURIComponent(results[2].replace(/\+/g, " "));
+			}
+
+			// Function to make the AJAX call and update HTML content
+			function fetchItemDetails() {
+				var itemId = getParameterByName('item-id');
+		
+				if (!itemId) {
+					console.error('Item ID not found in the URL parameters.');
+					return;
+				}
+				console.log('Item ID found : '+itemId);
+				// Make AJAX call
+				$.ajax({
+					url: '/item-listing/product?item-id=' + itemId,
+					type: 'GET',
+					success: function (response) {
+						if (response.success) {
+							updateProductDetails(response.product, response.imageFiles, response.averageRating);
+						} else {
+							console.error('Failed to retrieve item information.');
+						}
+					},
+					error: function () {
+						console.error('Failed to make the AJAX call.');
+					}
+				});
+			}
+		
+			function generateStars(rating) {
+				let blackStar = "<span class='star'>&#x2605;</span>".repeat(Math.floor(rating));
+				let halfStar = (rating % 1 !== 0) ? "<span class='star'>&#x00bd;</span>" : "";
+				let whiteStar = "<span class='star'>&#x2606;</span>".repeat(5 - Math.ceil(rating));
+
+				return blackStar + halfStar + whiteStar;
+			}
+
+			function createStarRating(rating) {
+				console.log('rating fn : '+rating);
+				const container = document.getElementById("star-rating-id");
+				if (rating === 0) {
+					container.innerHTML = 'Be The First One To Rate This Product';
+				} else {
+					container.innerHTML = generateStars(rating);
+				}
+			}
+
+			// Function to update HTML content with received data
+			function updateProductDetails(product, imageFiles, averageRating) {
+				// Update product name
+				var productNameHeader = document.querySelector('#product-name-header');
+				productNameHeader.innerHTML = product.name;
+		
+				// Update product image
+				var productImage = document.querySelector('#product-image-div img');
+				productImage.src = 'https://drive.google.com/uc?export=view&id=' + imageFiles[0].id;
+		
+				// Update other product details
+				var productDiv2 = document.querySelector('#product-div-2');
+				// productDiv2.querySelector('#product-div-rating .star-rating').innerHTML = '&#9733;&#9733;&#9733;&#9733;&#9733;';
+				// const productRatingElement = document.querySelector('.star-rating');
+				// productRatingElement.dataset.rating = roundToNearestHalf(averageRating);
+				// console.log('productRatingElement : '+productRatingElement.dataset.rating);
+				// console.log('productRatingElement : '+averageRating);
+				// Example usage
+				const rating = roundToNearestHalf(averageRating);
+				createStarRating(rating);
+
+				productDiv2.querySelector('#product-div-description p').innerHTML = product.description;
+		
+				var productDetailsDiv = document.querySelector('#product-div-specifications');
+				productDetailsDiv.innerHTML = '';
+				var excludeKeys = ['itemId', 'name', 'description', 'itemImage', 'listing_Status', 'created_on', 'remarks', 'updated_on', 'ItemListings', 'approval_Status', 'created_by', 'updated_by', 'Reviews'];
+				var keyDictionary = {
+					"category": "Category",
+					"storage": "Storage",
+					"cpu": "CPU",
+					"gpu": "GPU",
+					"ram": "RAM",
+					"operating_system": "Operating System",
+					"screen_size": "Screen Size",
+					"screen_type": "Screen Type",
+					"screen_resolution": "Screen Resolution",
+					"front_camera": "Front Camera",
+					"rear_camera": "Rear Camera",
+				};
+
+				// Iterate through product attributes and create HTML elements dynamically for non-null values
+				for (var key in product) {
+					if (product.hasOwnProperty(key) && !excludeKeys.includes(key) && product[key] !== null) {
+						console.log("Key : "+key);
+						var displayName = keyDictionary[key] || key;
+						var detailDiv = document.createElement('div');
+						detailDiv.classList.add('row', 'mb-3');
+
+						// var spacingDiv = document.createElement('div');
+						// spacingDiv.classList.add('col-md-1');
+
+						var labelDiv = document.createElement('div');
+						labelDiv.classList.add('col-md-6');
+
+						var valueDiv = document.createElement('div');
+						valueDiv.classList.add('col-md-6');
+
+						var strong = document.createElement('strong');
+						strong.innerHTML = displayName;
+
+						var p = document.createElement('p');
+						p.innerHTML = product[key];
+
+						labelDiv.appendChild(strong);
+						valueDiv.appendChild(p);
+						// detailDiv.appendChild(spacingDiv);
+						detailDiv.appendChild(labelDiv);
+						detailDiv.appendChild(valueDiv);
+						// detailDiv.appendChild(spacingDiv);
+
+						productDetailsDiv.appendChild(detailDiv);
+					}
+				}
+
+				// Update table with item listings
+				var tableBody = productDiv2.querySelector('#product-div-listings-list');
+				tableBody.innerHTML = '';
+		
+				product.ItemListings.forEach(function (item) {
+					var row = tableBody.insertRow();
+					var cell1 = row.insertCell(0);
+					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
+		
+					console.log("Attaching : "+ item.listingId + ", " + item.price + ", " + item.quantity);
+
+					cell1.innerHTML = item.EndUser.User.name;
+					cell2.innerHTML = item.price;
+		
+					// Create radio button and attach data attributes
+					var radioBtn = document.createElement('input');
+					radioBtn.type = 'radio';
+					radioBtn.name = 'listingId';
+					radioBtn.dataset.listingId = item.listingId;
+					radioBtn.dataset.itemName = product.name;
+					radioBtn.dataset.itemPrice = item.price;
+					radioBtn.dataset.itemCategory = product.category;
+
+					radioBtn.classList.add('listing-radio-button');
+					// radioBtn.classList.add('login-check-element');
+		
+					cell3.appendChild(radioBtn);
+
+					radioBtn.addEventListener('change', function() {
+						if (this.checked) {
+							document.getElementById('quantity-input').max = item.quantity;
+							quantityInputValidation();
+						}
+					});
+				});
+		
+			}
+
+			function displayReviews(comments) {
+				const ind_comment = comments.ind_comment;
+				comments = comments.comments;
+				// Update other product details
+				var itemReviewDiv = document.querySelector("#item-review");
+
+				// Update table with item listings
+				var itemReviewTable =
+					itemReviewDiv.querySelector("#item-review-table");
+				itemReviewTable.innerHTML = ""; // Clear existing rows
+
+				comments.forEach(function (comment) {
+					var row = itemReviewTable.insertRow();
+					var cell1 = row.insertCell(0);
+					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
+					let whiteStar = "<span>&#x2606;</span>";
+					whiteStar = whiteStar.repeat(5 - comment.rating);
+					let blackStar = "<span>&#x2605;</span>";
+					blackStar = blackStar.repeat(comment.rating);
+
+					cell1.innerHTML = comment.username;
+					cell2.innerHTML = comment.comment;
+					cell3.innerHTML =
+						'<div class="rating-stars">' +
+						blackStar +
+						whiteStar +
+						"</div>";
+				});
+				var itemReviewEdit = document.querySelector("#edit_button");
+				var itemReviewDelete = document.querySelector("#delete_button");
+
+				itemReviewEdit.innerHTML = "Submit";
+				itemReviewDelete.innerHTML = "Cancel";
+
+				if (ind_comment.review_id) {
+					var itemReviewBox =
+						document.querySelector("#item-review-box");
+					itemReviewBox.innerHTML =
+						'<p id="item-review-comment">' +
+						ind_comment.comment +
+						"</p>";
+
+					let whiteStar = "<span>&#x2606;</span>";
+					whiteStar = whiteStar.repeat(5 - ind_comment.rating);
+					let blackStar = "<span>&#x2605;</span>";
+					blackStar = blackStar.repeat(ind_comment.rating);
+
+					var ratingBox = document.querySelector("#rating-box");
+					ratingBox.innerHTML =
+						'<div class="rating-stars" id="rating" name="rating">' +
+						blackStar +
+						whiteStar +
+						"</div>";
+
+					window.ind_comment = ind_comment;
+
+					itemReviewEdit.innerHTML = "Edit";
+					itemReviewDelete.innerHTML = "Delete";
+				}
+			}
+
+			function getComments() {
+				let comments = [];
+				const itemId = getParameterByName("item-id");
+
+				if (!itemId) {
+					console.error("Item ID not found in the URL parameters.");
+					return;
+				}
+				console.log("Item ID found : " + itemId);
+				// Make AJAX call
+				$.ajax({
+					url: "/review/?itemId=" + itemId,
+					type: "GET",
+					success: function (response) {
+						if (response.success) {
+							displayReviews(response.body);
+						} else {
+							console.error(
+								"Failed to retrieve item information."
+							);
+						}
+					},
+					error: function () {
+						console.error("Failed to make the AJAX call.");
+					},
+				});
+			}
+
+			function displayReviews(comments) {
+				const ind_comment = comments.ind_comment;
+				comments = comments.comments;
+				// Update other product details
+				var itemReviewDiv = document.querySelector("#item-review");
+
+				// Update table with item listings
+				var itemReviewTable =
+					itemReviewDiv.querySelector("#item-review-table");
+				itemReviewTable.innerHTML = ""; // Clear existing rows
+
+				comments.forEach(function (comment) {
+					var row = itemReviewTable.insertRow();
+					var cell1 = row.insertCell(0);
+					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
+					let whiteStar = "<span>&#x2606;</span>";
+					whiteStar = whiteStar.repeat(5 - comment.rating);
+					let blackStar = "<span>&#x2605;</span>";
+					blackStar = blackStar.repeat(comment.rating);
+
+					cell1.innerHTML = comment.username;
+					cell2.innerHTML = comment.comment;
+					cell3.innerHTML =
+						'<div class="rating-stars">' +
+						blackStar +
+						whiteStar +
+						"</div>";
+				});
+				var itemReviewEdit = document.querySelector("#edit_button");
+				var itemReviewDelete = document.querySelector("#delete_button");
+
+				itemReviewEdit.innerHTML = "Submit";
+				itemReviewDelete.innerHTML = "Cancel";
+
+				if (ind_comment.review_id) {
+					var itemReviewBox =
+						document.querySelector("#item-review-box");
+					itemReviewBox.innerHTML =
+						'<p id="item-review-comment">' +
+						ind_comment.comment +
+						"</p>";
+
+					let whiteStar = "<span>&#x2606;</span>";
+					whiteStar = whiteStar.repeat(5 - ind_comment.rating);
+					let blackStar = "<span>&#x2605;</span>";
+					blackStar = blackStar.repeat(ind_comment.rating);
+
+					var ratingBox = document.querySelector("#rating-box");
+					ratingBox.innerHTML =
+						'<div class="rating-stars" id="rating" name="rating">' +
+						blackStar +
+						whiteStar +
+						"</div>";
+
+					window.ind_comment = ind_comment;
+
+					itemReviewEdit.innerHTML = "Edit";
+					itemReviewDelete.innerHTML = "Delete";
+				}
+			}
+
+			function displayRecommendations(items) {
+				// Update other product details
+				var recommendationsDiv =
+					document.querySelector("#recommendations");
+
+				// Update table with item listings
+				var recommendationsTable = recommendationsDiv.querySelector(
+					"#recommendations-table"
+				);
+				recommendationsTable.innerHTML = ""; // Clear existing rows
+
+				items.forEach(function (item) {
+					var row = recommendationsTable.insertRow();
+					var cell1 = row.insertCell(0);
+					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
+
+					cell1.className = "column1";
+					cell2.className = "column2";
+					cell3.className = "column3";
+
+					console.log(cell1.className);
+
+					cell1.innerHTML = item.name;
+					cell2.innerHTML = item.description;
+					cell3.innerHTML =
+						'<a href="' + item.link + '" target="_blank">Link</a>';
+				});
+			}
+
+			function getRecommendations() {
+				let comments = [];
+				const itemId = getParameterByName("item-id");
+
+				if (!itemId) {
+					console.error("Item ID not found in the URL parameters.");
+					return;
+				}
+				console.log("Item ID found : " + itemId);
+				// Make AJAX call
+				$.ajax({
+					url: "/recommendations/?itemId=" + itemId,
+					type: "GET",
+					success: function (response) {
+						if (response.success) {
+							console.log(response.body.items);
+							displayRecommendations(response.body.items);
+						} else {
+							console.error(
+								"Failed to retrieve item information."
+							);
+						}
+					},
+					error: function () {
+						console.error("Failed to make the AJAX call.");
+					},
+				});
+			}
+
+
+			function checkElementsWithLoginRequirement() {
+				console.log("Checking for button disabling!");
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/users/", true);
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState === 4) {
+						if (xhr.status !== 200) {
+								console.log("Not logged in check for the button disabling");
+								disableButtons();
+							}
+						} else {
+							console.error('Unable to check if the user is logged in. Error:', xhr.status, xhr.statusText);
+						}
+					}
+				xhr.send();
+				function disableButtons() {
+					var elementsToDisable = document.querySelectorAll('.login-check-element');
+					console.log("Checking for buttons : " + JSON.stringify(elementsToDisable));
+					elementsToDisable.forEach(function(element) {
+						console.log("Disabling : " + element);
+						element.disabled = true;
+					});
+				}
+			}
+
+			// Round to the nearest 0.50
+			function roundToNearestHalf(value) {
+				const roundedValue = Math.round(value * 100) / 100;
+				const remainder = roundedValue % 0.50;
+				const roundedToHalf = remainder < 0.25
+					? roundedValue - remainder
+					: roundedValue + (0.50 - remainder);
+
+				return roundedToHalf;
+			}
+
+			var quantityInput = document.getElementById('quantity-input');
+			const quantityInputValidation = function () {
+				console.log("Calledd");
+				var maxQuantity = parseInt(quantityInput.max, 10);
+				var enteredQuantity = parseInt(quantityInput.value, 10);
+				if (enteredQuantity > maxQuantity) {
+					quantityInput.value = maxQuantity;
+				}
+			}
+
+			quantityInput.addEventListener('change', quantityInputValidation);
+
+
+
+			$(document).ready(function () {
+				// Call the function to fetch item details on page load
+				fetchItemDetails();
+				checkElementsWithLoginRequirement();            
+				getComments();
+				getRecommendations();
+	        });
+
+            // Event listener for 'Add to Cart' button clicks
+            $('.add-to-cart-btn').click(function (event) {
+                // Prevent the default form submit action
+                event.preventDefault();
+
+                var selectedRadio = $("input[name='listingId']:checked");
+
+                if (selectedRadio.length > 0) {
+                    var listingId = selectedRadio.data("listing-id");
+                    var itemName = selectedRadio.data("item-name");
+                    var itemPrice = selectedRadio.data("item-price");
+                    var itemCategory = selectedRadio.data("item-category");
+
+                    var quantity = parseInt($('#quantity-input').val(), 10);
+                    if (isNaN(quantity) || quantity <= 0) {
+                        alert("Please enter a valid quantity.");
+                        return;
+                    }
+
+                    var maxQuantity = parseInt(selectedRadio.data("max-quantity"), 10);
+                    if (quantity > maxQuantity) {
+                        alert("Quantity exceeds available stock.");
+                        return;
+                    }
+
+                    console.log("Listing ID: " + listingId);
+                    console.log("Item Name: " + itemName);
+                    console.log("Item Price: " + itemPrice);
+                    console.log("Item Category: " + itemCategory);
+                    // console.log($(this).data('item-id'));
+                    // var listingId = $(this).data('item-id');
+                    // var itemName = $(this).data('item-name');
+                    // var itemPrice = $(this).data('item-price');
+                    // var itemCategory = $(this).data('item-category');
+                    // console.log(listingId, itemName, itemPrice, itemCategory);
+
+                    // Create an object with the item details
+                    var itemData = {
+                        listingId: listingId,
+                        name: itemName,
+                        price: itemPrice,
+                        category: itemCategory,
+                        quantity: quantity
+                    };
+
+                    // Make the AJAX request to the API
+                    $.ajax({
+                        type: 'POST',
+                        url: '/cart/add-itemlisting', // Replace with your actual API endpoint
+                        data: itemData,
+                        success: function(response) {
+                            // Handle success - perhaps confirm to the user that the item was added
+                            alert('Item added to cart!');
+                        },
+                        error: function(error) {
+                            // Handle error - perhaps notify the user that an error occurred
+                            alert('Error adding item to cart.');
+                        }
+                    });
+
+                } else {
+                    alert("Please select an item before adding to cart.");
+                } 
+            });
+
+
+		</script>
+
+		<script type="text/javascript">
+			// Wait for the DOM to be ready
+			$(document).ready(function () {
+				$("#edit_button").click(function (event) {
+					event.preventDefault();
+					const buttonText = $(this).text();
+					var itemId = getParameterByName("item-id");
+
+					if (buttonText === "Submit") {
+						var itemReviewBox =
+							document.querySelector("#item-review-box");
+						var ratingBox = document.querySelector("#rating-box");
+						const rating = ratingBox.querySelector(
+							"#rating option:checked"
+						).innerHTML;
+						const comment =
+							document.querySelector("#item-review-input").value;
+
+						if (comment.length == 0) {
+							alert("Empty box");
+						} else if (rating === "Select a rating") {
+							alert("Please select a rating");
+						} else {
+							$.ajax({
+								type: "POST",
+								url: "/review",
+								data: {
+									itemId: itemId,
+									rating: rating,
+									comments: comment,
+								},
+								success: function (response) {
+									if (response.success) {
+										$("#edit_button").text("Edit");
+										$("#delete_button").text("Delete");
+										let blackStar = "<span>&#x2605;</span>";
+										blackStar = blackStar.repeat(rating);
+										let whiteStar = "<span>&#x2606;</span>";
+										whiteStar = whiteStar.repeat(
+											5 - rating
+										);
+										itemReviewBox.innerHTML =
+											'<p id="item-review-comment">' +
+											comment +
+											"</p>";
+										ratingBox.innerHTML =
+											'<div class="rating-stars" id="rating" name="rating">' +
+											blackStar +
+											whiteStar +
+											"</div>";
+										window.ind_comment = {
+											review_id: response.reviewId,
+											rating: rating,
+											comment: comment,
+										};
+									}
+								},
+								error: function (error) {
+									// Handle error - perhaps notify the user that an error occurred
+									if (
+										Object.keys(
+											error.responseJSON
+										).includes("redirectUrl")
+									) {
+										window.location.href =
+											error.responseJSON.redirectUrl;
+									}
+									alert(error.responseJSON.message);
+								},
+							});
+						}
+					} else {
+						var itemReviewBox =
+							document.querySelector("#item-review-box");
+						var ratingBox = document.querySelector("#rating-box");
+
+						console.log(
+							document.querySelector("#rating").innerHTML
+						);
+
+						$("#edit_button").text("Submit");
+						$("#delete_button").text("Cancel");
+						const comment = document.querySelector(
+							"#item-review-comment"
+						).textContent;
+						itemReviewBox.innerHTML =
+							'<input type="text" class="form-control text-left" ' +
+							'id="item-review-input" name="item-review-input" value="' +
+							comment +
+							'"required />';
+						ratingBox.innerHTML =
+							'<select class="form-control text-left" id="rating" name="rating" required>\n' +
+							'<option value="">Select a rating</option>\n' +
+							'<option value="1">1</option>\n' +
+							'<option value="2">2</option>\n' +
+							'<option value="3">3</option>\n' +
+							'<option value="4">4</option>\n' +
+							'<option value="5">5</option>' +
+							"</select>";
+					}
+				});
+				$("#delete_button").click(function (event) {
+					event.preventDefault();
+					const buttonText = $(this).text();
+					const ind_comment = window.ind_comment;
+
+					if (buttonText === "Delete") {
+						$.ajax({
+							type: "DELETE",
+							url: "/review?reviewId=" + ind_comment.review_id,
+							success: function (response) {
+								console.log(response);
+							},
+							error: function (error) {
+								if (
+									Object.keys(error.responseJSON).includes(
+										"redirectUrl"
+									)
+								) {
+									window.location.href =
+										error.responseJSON.redirectUrl;
+								}
+								console.log("Redirect");
+								alert(error.responseJSON.message);
+							},
+						});
+						var itemReviewBox =
+							document.querySelector("#item-review-box");
+						var ratingBox = document.querySelector("#rating-box");
+
+						$("#edit_button").text("Submit");
+						$("#delete_button").text("Cancel");
+						const comment = "";
+						itemReviewBox.innerHTML =
+							'<input type="text" class="form-control text-left" ' +
+							'id="item-review-input" name="item-review-input" value="' +
+							comment +
+							'"required />';
+						ratingBox.innerHTML =
+							'<select class="form-control text-left" id="rating" name="rating" required>\n' +
+							'<option value="">Select a rating</option>\n' +
+							'<option value="1">1</option>\n' +
+							'<option value="2">2</option>\n' +
+							'<option value="3">3</option>\n' +
+							'<option value="4">4</option>\n' +
+							'<option value="5">5</option>' +
+							"</select>";
+						window.ind_comment = {
+							review_id: undefined,
+							comment: undefined,
+							rating: undefined,
+						};
+					} else {
+						var itemReviewEdit =
+							document.querySelector("#edit_button");
+						var itemReviewDelete =
+							document.querySelector("#delete_button");
+
+						if (ind_comment.review_id) {
+							var itemReviewBox =
+								document.querySelector("#item-review-box");
+							itemReviewBox.innerHTML =
+								'<p id="item-review-comment">' +
+								ind_comment.comment +
+								"</p>";
+
+							let whiteStar = "<span>&#x2606;</span>";
+							whiteStar = whiteStar.repeat(
+								5 - ind_comment.rating
+							);
+							let blackStar = "<span>&#x2605;</span>";
+							blackStar = blackStar.repeat(ind_comment.rating);
+
+							var ratingBox =
+								document.querySelector("#rating-box");
+							ratingBox.innerHTML =
+								'<div class="rating-stars" id="rating" name="rating">' +
+								blackStar +
+								whiteStar +
+								"</div>";
+
+							itemReviewEdit.innerHTML = "Edit";
+							itemReviewDelete.innerHTML = "Delete";
+						} else {
+							var itemReviewBox =
+								document.querySelector("#item-review-box");
+							var ratingBox =
+								document.querySelector("#rating-box");
+
+							$("#edit_button").text("Submit");
+							$("#delete_button").text("Cancel");
+							const comment = "";
+							itemReviewBox.innerHTML =
+								'<input type="text" class="form-control text-left" ' +
+								'id="item-review-input" name="item-review-input" value="' +
+								comment +
+								'"required />';
+							ratingBox.innerHTML =
+								'<select class="form-control text-left" id="rating" name="rating" required>\n' +
+								'<option value="">Select a rating</option>\n' +
+								'<option value="1">1</option>\n' +
+								'<option value="2">2</option>\n' +
+								'<option value="3">3</option>\n' +
+								'<option value="4">4</option>\n' +
+								'<option value="5">5</option>' +
+								"</select>";
+							window.ind_comment = {
+								review_id: undefined,
+								comment: undefined,
+								rating: undefined,
+							};
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

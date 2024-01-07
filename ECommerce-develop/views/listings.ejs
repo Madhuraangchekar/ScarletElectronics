@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="icon" type="image/png" sizes="32x32" href="../public/landing_page/images/favicon-32x32.png">
+    <title>SE Listing Page</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootsthap5.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../public/landing_page/app/scss/style.css">
+    <!-- Make sure to include this at the end of your body tag -->
+    <script type="text/javascript">
+        // Wait for the DOM to be ready
+        // $(document).ready(function () {
+            // Event listener for 'Add to Cart' button clicks
+            // $('.add-to-cart-btn').click(function (event) {
+            $(document).on('click', '.add-to-cart-btn', function(event) {
+                // Prevent the default form submit action
+                event.preventDefault();
+
+                console.log($(this).data('item-id'));
+                // Get the item details from the data attributes
+                var listingId = $(this).data('item-id');
+                var itemName = $(this).data('item-name');
+                var itemPrice = $(this).data('item-price');
+                var itemCategory = $(this).data('item-category');
+                console.log(listingId, itemName, itemPrice, itemCategory);
+
+                // Create an object with the item details
+                var itemData = {
+                    listingId: listingId,
+                    name: itemName,
+                    price: itemPrice,
+                    category: itemCategory
+                };
+
+                // Make the AJAX request to the API
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart/add-itemlisting', // Replace with your actual API endpoint
+                    data: itemData,
+                    success: function(response) {
+                        // Handle success - perhaps confirm to the user that the item was added
+                        alert('Item added to cart!');
+                    },
+                    error: function(error) {
+                        // Handle error - perhaps notify the user that an error occurred
+                        alert('Error adding item to cart.');
+                    }
+                });
+            });
+        // });
+    </script>
+    
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../public/landing_page/app/scss/style.css">
+    <style>
+        .attribution { font-size: 11px; text-align: center; }
+        .attribution a { color: hsl(228, 45%, 44%); }
+    </style> -->
+</head>
+
+<body class="body_flex">
+    <%- include('Common/header2.ejs') %>
+    <br><br><br>
+    <h1 class="text-center mx-auto">Scarlet Electronics</h1>
+    <br><br><br>
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-2">
+                <form id="seller-filter">
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <label for="price">Price:</label>
+                            <select class="form-control" id="price">
+                                <option value="">Any</option>
+                                <option value="0-100">Under $100</option>
+                                <option value="100-500">$100 - $500</option>
+                                <option value="500-1000">$500 - $1000</option>
+                                <option value="1000-2000">$1000 - $2000</option>
+                                <option value="2000-100000">$2000 Above</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="category">Category:</label>
+                            <select class="form-control" id="category">
+                                <option value="">Select Category</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="storage">Storage:</label>
+                            <select class="form-control" id="storage">
+                                <option value="">Select Storage</option>
+                            </select>
+                        </div>
+                        <!-- Add more filter criteria dropdowns as needed -->
+                        <div class="form-group col-md-10">
+                            <label for="cpu">CPU:</label>
+                            <select class="form-control" id="cpu">
+                                <option value="">Select CPU</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="gpu">GPU:</label>
+                            <select class="form-control" id="gpu">
+                                <option value="">Select GPU</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="ram">RAM:</label>
+                            <select class="form-control" id="ram">
+                                <option value="">Select RAM</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="operating_system">Operating System:</label>
+                            <select class="form-control" id="operating_system">
+                                <option value="">Select Operating System</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="screen_size">Screen Size:</label>
+                            <select class="form-control" id="screen_size">
+                                <option value="">Select Screen Size</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="screen_type">Screen Type:</label>
+                            <select class="form-control" id="screen_type">
+                                <option value="">Select Screen Type</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="screen_resolution">Screen Resolution:</label>
+                            <select class="form-control" id="screen_resolution">
+                                <option value="">Select Screen Resolution</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="front_camera">Front Camera:</label>
+                            <select class="form-control" id="front_camera">
+                                <option value="">Select Front Camera</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="rear_camera">Rear Camera:</label>
+                            <select class="form-control" id="rear_camera">
+                                <option value="">Select Rear Camera</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-10" id="cont1">
+                <div class="row" id="listings-div">
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="d-flex justify-content-end">
+            <form action="/cart/fetch-cart-display" method="GET">
+                <button type="submit" class="btn btn-primary">Cart</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="d-flex align-items-end">
+            <form action="/item-listing/create" method="GET">
+                <button type="submit" class="btn btn-primary login-check-element">Sell Item</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <script>
+
+        //helper function to load the options of the Buyer filter dynamically
+        function populateSelect(selectId, options) {
+            var selectElement = document.getElementById(selectId);
+            
+            // Clear existing options except the first one
+            selectElement.length = 1;
+
+            // Add new options from the data
+            options.forEach(function(option, index) {
+                var opt = document.createElement('option');
+                opt.value = option.toLowerCase().replace(/\s+/g, '-');
+                opt.textContent = option;
+                opt.setAttribute('data-id', index); // Setting a custom attribute as ID
+                selectElement.appendChild(opt);
+            });
+        }
+
+        // Ajax call for loading the buyer filters.
+        document.addEventListener('DOMContentLoaded', function (event) {
+            event.preventDefault();
+            fetch('/item-listing/getUniqueValues')
+            .then(response => response.json())
+			.then(data => {
+				if (data.success) {
+                    const columns = ['CATEGORY', 'STORAGE', 'CPU', 'GPU', 'RAM', 'OS', 'ScreenSize', 
+                    'ScreenType', 'ScreenResolution', 'FrontCamera', 'RearCamera']
+                    populateSelect('category', data.body.CATEGORY);
+                    populateSelect('storage', data.body.STORAGE);
+                    populateSelect('cpu', data.body.CPU);
+                    populateSelect('gpu', data.body.GPU);
+                    populateSelect('ram', data.body.RAM);
+                    populateSelect('operating_system', data.body.OPERATING_SYSTEM);
+                    populateSelect('screen_size', data.body.SCREEN_SIZE);
+                    populateSelect('screen_type', data.body.SCREEN_TYPE);
+                    populateSelect('screen_resolution', data.body.SCREEN_RESOLUTION);
+                    populateSelect('front_camera', data.body.FRONT_CAMERA);
+                    populateSelect('rear_camera', data.body.REAR_CAMERA);
+                    //others
+				} else {
+					window.location.href = data.redirectUrl;
+				}
+			})
+			.catch(error => {
+				// document.getElementById('errorMsg').innerText = error.message || 'An unexpected error occurred.';
+				console.error('Error:', error);
+			});
+        });
+
+
+        document.getElementById('seller-filter').addEventListener('submit', function (event) {
+            event.preventDefault();
+            console.log("in seller-filter submission")
+
+            // console.log(document.getElementById("category").value);
+            // console.log(document.getElementById("storage").value);
+
+            // fetch('/item-listing/apply-filter', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         category: document.getElementById("category").value,
+            //         storage: document.getElementById("storage").value
+            //     })
+            // })
+            //     .then(response => {  ///check the below code.
+            //         // Check if the response is not ok (e.g., status code 400, 409, etc.)
+            //         if (!response.ok) {
+            //             // Convert the response to JSON and then throw an error with the backend's message
+            //             return response.json().then(data => {
+            //                 throw new Error(data.message);
+            //             });
+            //         }
+            //         return response.json();
+            //     })
+            //     .then(data => {
+            //         if (data.success) {
+            //             // Redirect to the specified URL
+            //             alert(data.message);
+            //             // window.location.href = data.redirectUrl || '/users/login';
+            //         }
+            //     })
+            //     .catch(error => {
+            //         // This will now catch errors with specific messages from the backend
+            //         console.error('Error:', error);
+            //         alert(error.message);
+            //     });
+            
+            fetchClaimedRequests();
+        });
+
+        function fetchClaimedRequests() {
+
+            let price = document.getElementById('price').value;
+            let category = document.getElementById('category').value;
+            let storage = document.getElementById('storage').value;
+            let cpu = document.getElementById('cpu').value;
+            let gpu = document.getElementById('gpu').value;
+            let ram = document.getElementById('ram').value;
+            let operating_system = document.getElementById('operating_system').value;
+            let screen_size = document.getElementById('screen_size').value;
+            let screen_type = document.getElementById('screen_type').value;
+            let screen_resolution = document.getElementById('screen_resolution').value;
+            let front_camera = document.getElementById('front_camera').value;
+            let rear_camera = document.getElementById('rear_camera').value;
+
+            let url = "/item-listing/";
+            if (price || category || storage || cpu || gpu || ram || operating_system || screen_size || screen_type || screen_resolution || front_camera || rear_camera) {
+                let queryParams = [];
+
+                if (price) {
+                    queryParams.push("price=" + encodeURIComponent(price));
+                }
+
+                if (category) {
+                    queryParams.push("category=" + encodeURIComponent(category));
+                }
+
+                if (storage) {
+                    queryParams.push("storage=" + encodeURIComponent(storage));
+                }
+
+                if (cpu) {
+                    queryParams.push("cpu=" + encodeURIComponent(cpu));
+                }
+
+                if (gpu) {
+                    queryParams.push("gpu=" + encodeURIComponent(gpu));
+                }
+
+                if (ram) {
+                    queryParams.push("ram=" + encodeURIComponent(ram));
+                }
+
+                if (operating_system) {
+                    queryParams.push("operating_system=" + encodeURIComponent(operating_system));
+                }
+
+                if (screen_size) {
+                    queryParams.push("screen_size=" + encodeURIComponent(screen_size));
+                }
+
+                if (screen_type) {
+                    queryParams.push("screen_type=" + encodeURIComponent(screen_type));
+                }
+
+                if (screen_resolution) {
+                    queryParams.push("screen_resolution=" + encodeURIComponent(screen_resolution));
+                }
+
+                if (front_camera) {
+                    queryParams.push("front_camera=" + encodeURIComponent(front_camera));
+                }
+
+                if (rear_camera) {
+                    queryParams.push("rear_camera=" + encodeURIComponent(rear_camera));
+                }
+
+                url += "?" + queryParams.join("&");
+
+            }
+
+            console.log(url);
+            
+            $.ajax({
+                type: "GET",
+                url: url,
+                // data: $(this).serialize(), // Serialize form data
+                success: function(response) {
+                    var divParent = $('#listings-div');
+                    divParent.empty(); // Clear existing content in the parent div
+                    response.serializedListings.forEach(function(item) {
+                            // Create a new card for each item in serializedListings
+                            var cardHtml = `
+                                    <div class="col-md-4">
+                                        <div class="card card-listings-page">
+                                            <div class="image-container">
+                                                <img src="https://drive.google.com/uc?export=view&id=${item.imageFiles[0].id}" class="img_contain" alt="Image Unavailable">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">${item.name}</h5>
+                                                <h6 class="card-text">From Price: $${item.price}</h6>
+                                                <h7 class="card-subtitle mb-2 text-muted">${item.category}</h7>
+                                                <p class="card-text card-text-description">${item.description}</p>
+                                                <a href="/item-listing/catalog?item-id=${item.itemId}" class="btn btn-primary"
+                                                    data-item-id="${item.listingId}">
+                                                    View Details
+                                                </a>
+                                                <a href="#" class="btn btn-secondary add-to-cart-btn login-check-element"   
+                                                    data-item-id="${item.listingId}"
+                                                    data-item-name="${item.name}"
+                                                    data-item-price="${item.price}"
+                                                    data-item-category="${item.category}">
+                                                    Add to Cart
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                divParent.append(cardHtml); // Append the new card to the parent div
+                        });
+                        checkElementsWithLoginRequirement();
+                    },
+                    error: function(error) {
+                        console.error('Error fetching claimed requests:', error);
+                    }
+                });
+        }
+
+        function checkElementsWithLoginRequirement() {
+            console.log("Checking for button disabling!");
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/users/", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status !== 200) {
+                            console.log("Not logged in check for the button disabling");
+                            disableButtons();
+                        }
+                    } else {
+                        console.error('Unable to check if the user is logged in. Error:', xhr.status, xhr.statusText);
+                    }
+                }
+            xhr.send();
+            function disableButtons() {
+                var elementsToDisable = document.querySelectorAll('.login-check-element');
+                elementsToDisable.forEach(function(element) {
+                    element.disabled = true;
+                });
+            }
+        }
+
+
+        $(document).ready(function() {
+            
+            fetchClaimedRequests();
+
+        });
+    </script>
+
+</body>
+<%- include('Common/footer.ejs') %>
+
+</html>

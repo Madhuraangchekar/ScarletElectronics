@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+    <style>
+
+
+        .container {
+            margin-top: 50px;
+        }
+
+        #customerRepsTableDiv {
+            margin-top: 20px;
+        }
+
+        #customerRepsTable_wrapper .dataTables_length {
+            float: left;
+        }
+
+        #customerRepsTable {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('Common/header.ejs') %>
+    <div class="container" align="center">
+        <h1 class="text-primary">Admin Dashboard</h1>
+
+        <!-- Button to create a customer representative -->
+        <button class="btn btn-success" onclick="createCustomerRepresentative()">Create Customer Representative</button>
+        <form method="GET" action="#" id="viewAllRepsForm" style="display: inline-block; margin-right: 10px;">
+            <button type="submit" class="btn btn-primary">List All Customer Representative</button>
+        </form>
+        <br>
+        <br>
+        <!-- Section to display all customer representatives -->
+        <div id="customerRepsTableDiv" style="display: none;">
+            <h2 class="text-primary">View All Customer Representatives</h2>
+            <br>
+            <table class="table table-bordered" id="customerRepsTable" cellspacing="0">
+                <thead>
+                    <th width="5%">User ID</th>
+                    <th width="10%">Name</th>
+                    <th width="10%">Email</th>
+                    <th width="10%">Designation</th>
+                    <th width="10%">SSN</th>
+                    <th width="10%">Created On</th>
+                </thead>
+                <tbody>
+                    <!-- Table rows will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        // JavaScript function to handle the button click
+        function createCustomerRepresentative() {
+            // Redirect to the "/admin/customer-rep" page for creating a customer representative
+            window.location.href = '/admin/customer-rep';
+        }
+
+        // Ajax function to fetch and display all customer representatives
+        function fetchCustomerReps() {
+            $.ajax({
+                type: "POST",
+                url: "/admin/show-all-customer-reps",
+                success: function (response) {
+                    var tableBody = $('#customerRepsTable tbody');
+                    tableBody.empty();
+                    response.serializedReps.forEach(function (rep) {
+                        var row = '<tr>' +
+                            '<td>' + rep.userId + '</td>' +
+                            '<td>' + rep.name + '</td>' +
+                            '<td>' + rep.emailId + '</td>' +
+                            '<td>' + rep.designation + '</td>' +
+                            '<td>' + rep.ssn + '</td>' +
+                            '<td>' + rep.created_on + '</td>' +
+                            '</tr>';
+                        tableBody.append(row);
+                    });
+
+                    // Destroy the existing DataTable instance, if any
+                    if ($.fn.DataTable.isDataTable('#customerRepsTable')) {
+                        $('#customerRepsTable').DataTable().destroy();
+                    }
+
+                    // Initialize DataTable with searching option
+                    $('#customerRepsTable').DataTable({
+                        paging: true,
+                        searching: true,
+                    });
+                },
+                error: function (error) {
+                    console.error('Error fetching customer representatives:', error);
+                }
+            });
+        }
+
+        // Initial fetch for the customer representatives table on page load
+        fetchCustomerReps();
+        $('#viewAllRepsForm').on('click', 'button', function() {
+                $('#customerRepsTableDiv').toggle(); // Toggle visibility of the allRequestsTableDiv
+                fetchCustomerReps(); // Fetch and populate all requests
+            });
+    </script>
+</body>
+
+</html>

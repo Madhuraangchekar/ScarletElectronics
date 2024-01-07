@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Seller Listing Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <%- include('Common/header2.ejs') %>
+    <h1 class="text-center mx-auto">Item Listing Page</h1>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-2 vh-100">
+                <form id="itemFilter1" name="itemFilter" method="get"
+                    action="">
+                    <div align="center">
+
+                        <br>
+                        <br>
+                        <h4>Item Filter</h4>
+                        <br> <br> <label for="itemName"
+                            class="filterOptionStyling">Item name:</label> <input
+                            type="text" id="itemName" name="itemName"
+                            class="filterOptionStyling"> <br>
+                        <br> <select name="category" id="category" class="filterOptionStyling">
+                            <option value="">Select Category</option>
+                            <!-- <c:forEach items="${listUniqueCategory}"
+                                var="listUniqueCategory">
+                                <option>${listUniqueCategory}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="cpu" id="cpu" class="filterOptionStyling">
+                            <option value="">Select CPU</option>
+                            <!-- <c:forEach items="${listUniqueCPU}" var="listUniqueCPU">
+                                <option>${listUniqueCPU}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="gpu" id="gpu" class="filterOptionStyling">
+                            <option value="">Select GPU</option>
+                            <!-- <c:forEach items="${listUniqueGPU}" var="listUniqueGPU">
+                                <option>${listUniqueGPU}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="ram" id="ram" class="filterOptionStyling">
+                            <option value="">Select RAM</option>
+                            <!-- <c:forEach items="${listUniqueRAM}" var="listUniqueRAM">
+                                <option>${listUniqueRAM}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="storage" id="storage" class="filterOptionStyling">
+                            <option value="">Select Storage</option>
+                            <!-- <c:forEach items="${listUniqueStorage}" var="listUniqueStorage">
+                                <option>${listUniqueStorage}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="operating_system" id="operating_system" class="filterOptionStyling">
+                            <option value="">Select Operating System</option>
+                            <!-- <c:forEach items="${listUniqueOS}" var="listUniqueOS">
+                                <option>${listUniqueOS}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="screen_size" id="screen_size" class="filterOptionStyling">
+                            <option value="">Select Screen Size</option>
+                            <!-- <c:forEach items="${listUniqueScreenSize}"
+                                var="listUniqueScreenSize">
+                                <option>${listUniqueScreenSize}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="screen_type" id="screen_type" class="filterOptionStyling">
+                            <option value="">Select Screen Type</option>
+                            <!-- <c:forEach items="${listUniqueScreenType}"
+                                var="listUniqueScreenType">
+                                <option>${listUniqueScreenType}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="screen_resolution" id="screen_resolution" class="filterOptionStyling">
+                            <option value="">Select Screen Resolution</option>
+                            <!-- <c:forEach items="${listUniqueScreenRes}"
+                                var="listUniqueScreenRes">
+                                <option>${listUniqueScreenRes}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="front_camera" id="front_camera" class="filterOptionStyling">
+                            <option value="">Select Front Camera</option>
+                            <!-- <c:forEach items="${listUniqueFrontCam}"
+                                var="listUniqueFrontCam">
+                                <option>${listUniqueFrontCam}</option>
+                            </c:forEach> -->
+                        </select> <br>
+                        <br> <select name="rear_camera" id="rear_camera" class="filterOptionStyling">
+                            <option value="">Select Rear Camera</option>
+                            <!-- <c:forEach items="${listUniqueRearCam}" var="listUniqueRearCam">
+                                <option>${listUniqueRearCam}</option>
+                            </c:forEach> -->
+                        </select> <br> <br>
+                        <br>
+                        <!-- <input type="submit" value="Search" /> -->
+                        <!-- <input type="submit" value="Search" name="Search" id="Search" /> -->
+                        <button type="submit">Apply Filter</button>
+
+                        <button type="submit" formaction="">Clear Filter</button>
+                    </div>
+                </form>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <p></p>
+            </div>
+            <div class="col-md-2 vh-100">
+                <div class="row">
+                    <div class="col-md-3 text-center mx-auto">
+                        <!-- <a class="btn btn-outline-success align-self-center" href="/add-item/add" role="button">Add Item</a> -->
+                        <form method="GET" action="/add-item/add">
+                            <button type="submit" class="btn btn-primary align-self-center login-check-element">Add Item</button>
+                        </form>
+                    </div>
+                    <!-- <div class="col-md-3 text-center mx-auto">
+                        <a class="btn btn-outline-success align-self-center" href="/item-listing/get-existing-listing" role="button">Get Items</a>
+                    </div> -->
+                </div>
+                
+                <div class="col-md-3 text-center mx-auto">
+                    <form action="/item-listing/create" method="POST" id="createitemlisting-form" name="createitemlisting">
+                        <table class="table table-bordered" id="itemCatalog" cellspacing="0" width="100%">
+                            <thead>
+                                <th>Select Item</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>CPU</th>
+                                <th>GPU</th>
+                                <th>RAM</th>
+                                <th>Storage</th>
+                                <th>OS</th>
+                                <th>Screen Size</th>
+                                <th>Front Cam</th>
+                                <th>Rear Cam</th>
+                                <th>itemImage</th>
+                                <!-- <th>listing_Status</th>
+                                <th>approval_Status</th>
+                                <th>created_on</th>
+                                <th>created_by</th>
+                                <th>remarks</th>
+                                <th>updated_by</th>
+                                <th>updated_on</th>-->
+
+                            </thead>
+                            <tbody id="catalogTableBody">
+                                
+                            </tbody>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>Price:</td>
+                                <td><input type="number" step="0.01" name="price" id="price" /></td>
+                            </tr>
+                            <tr>
+                                <td>Quantity:</td>   <td><input type="number" step="1" name="quantity" id="quantity" /></td> 
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="Submit" class="btn btn-primary"
+										onclick="return validateForm()" /></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>  
+        </div>
+    </div>
+</body>
+
+
+<script>
+    function validateForm() {
+        const priceInput = document.getElementById('price');
+        const quantityInput = document.getElementById('quantity');
+        
+        var radioButtons = document.getElementsByName("itemId");
+        var selected = false;
+        for (var i = 0; i < radioButtons.length; i++) {
+            if (radioButtons[i].checked) {
+                selected = true;
+                break;
+            }
+        }
+        if (!selected) {
+            alert("Please select an item.");
+            return false;
+        }
+        
+        if (priceInput.value === '') {
+            alert('Please fill in the Price');
+            return false;
+        }
+        else if (quantityInput.value === '') {
+            alert('Please provide the quantity');
+            return false;
+        }
+        else {
+            
+            return true;
+        }
+    }
+
+    function populateTable(catalogData) {
+        var tbody = $('#catalogTableBody');
+        tbody.empty();
+        catalogData.forEach(function(y) {
+            var row = '<tr>' +
+                '<td><input type="radio" id="itemId" name="itemId" value="' + y.itemId + '"></td>' +
+                '<td>' + y.name + '</td>' +
+                '<td>' + y.description + '</td>' +
+                '<td>' + y.category + '</td>' +
+                '<td>' + y.cpu + '</td>' +
+                '<td>' + y.gpu + '</td>' +
+                '<td>' + y.ram + '</td>' +
+                '<td>' + y.storage + '</td>' +
+                '<td>' + y.operating_system + '</td>' +
+                '<td>' + y.screen_size + '</td>' +
+                '<td>' + y.front_camera + '</td>' +
+                '<td>' + y.rear_camera + '</td>' +
+                '<td>' + y.itemImage + '</td>' +
+                '</tr>';
+            tbody.append(row);
+        });
+    }
+    
+    // Function to make the AJAX call on form submission
+    function submitForm() {
+        var form = document.getElementById('createitemlisting-form');
+
+        $.ajax({
+            url: form.action,
+            type: form.method,
+            data: $(form).serialize(),
+            success: function (response, status, xhr) {
+                if (xhr.status === 201) {
+                    window.location.href = '/item-listing/listings';
+                } else {
+                    alert('Error in adding item to the system. Contact admin!');
+                }
+            },
+            error: function () {
+                alert('Error in adding item to the system. Contact admin!!');
+            }
+        });
+
+        return false;
+    }
+
+    // Add event listener for form submission
+    var form = document.getElementById('createitemlisting-form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (validateForm()) {
+            submitForm();
+        }
+    });
+
+
+    //helper function to load the options of the Seller filter dynamically
+    function populateSelect(selectId, options) {
+        var selectElement = document.getElementById(selectId);
+        
+        // Clear existing options except the first one
+        selectElement.length = 1;
+
+        // Add new options from the data
+        options.forEach(function(option, index) {
+            var opt = document.createElement('option');
+            opt.value = option.toLowerCase().replace(/\s+/g, '-');
+            opt.textContent = option;
+            opt.setAttribute('data-id', index); // Setting a custom attribute as ID
+            selectElement.appendChild(opt);
+        });
+    }
+
+
+    function callAndGetListingData() {
+        let category = document.getElementById('category').value;
+        let storage = document.getElementById('storage').value;
+        let cpu = document.getElementById('cpu').value;
+        let gpu = document.getElementById('gpu').value;
+        let ram = document.getElementById('ram').value;
+        let operating_system = document.getElementById('operating_system').value;
+        let screen_size = document.getElementById('screen_size').value;
+        let screen_type = document.getElementById('screen_type').value;
+        let screen_resolution = document.getElementById('screen_resolution').value;
+        let front_camera = document.getElementById('front_camera').value;
+        let rear_camera = document.getElementById('rear_camera').value;
+
+        let url = "/item-listing/get-existing-listing";
+        if (category || storage || cpu || gpu || ram || operating_system || screen_size || screen_type || screen_resolution || front_camera || rear_camera) {
+            let queryParams = [];
+
+            if (category) {
+                queryParams.push("category=" + encodeURIComponent(category));
+            }
+
+            if (storage) {
+                queryParams.push("storage=" + encodeURIComponent(storage));
+            }
+
+            if (cpu) {
+                queryParams.push("cpu=" + encodeURIComponent(cpu));
+            }
+
+            if (gpu) {
+                queryParams.push("gpu=" + encodeURIComponent(gpu));
+            }
+
+            if (ram) {
+                queryParams.push("ram=" + encodeURIComponent(ram));
+            }
+
+            if (operating_system) {
+                queryParams.push("operating_system=" + encodeURIComponent(operating_system));
+            }
+
+            if (screen_size) {
+                queryParams.push("screen_size=" + encodeURIComponent(screen_size));
+            }
+
+            if (screen_type) {
+                queryParams.push("screen_type=" + encodeURIComponent(screen_type));
+            }
+
+            if (screen_resolution) {
+                queryParams.push("screen_resolution=" + encodeURIComponent(screen_resolution));
+            }
+
+            if (front_camera) {
+                queryParams.push("front_camera=" + encodeURIComponent(front_camera));
+            }
+
+            if (rear_camera) {
+                queryParams.push("rear_camera=" + encodeURIComponent(rear_camera));
+            }
+
+            url += "?" + queryParams.join("&");
+
+        }
+
+        console.log(url);
+        
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    populateTable(response.body);
+                } else {
+                    console.error('Error fetching data:', response.message);
+                    window.location.href = response.redirectUrl
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('AJAX Error:', textStatus, errorThrown);
+                window.location.href = response.redirectUrl
+            }
+        });
+
+    }
+
+
+    function disableButtons() {
+            var elementsToDisable = document.querySelectorAll('.login-check-element');
+            elementsToDisable.forEach(function(element) {
+                element.disabled = true;
+            });
+        }
+
+    // Ajax call for loading the seller filters.
+    document.addEventListener('DOMContentLoaded', function (event) {
+        event.preventDefault();
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/users/", true);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status !== 200) {
+                        console.log("Not logged in check for the button disabling");
+                        disableButtons();
+                    }
+                } else {
+                    console.error('Unable to check if the user is logged in. Error:', xhr.status, xhr.statusText);
+                }
+            }
+        xhr.send();
+
+        fetch('/item-listing/getUniqueValues')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // const columns = ['CATEGORY', 'STORAGE']
+                populateSelect('category', data.body.CATEGORY);
+                populateSelect('storage', data.body.STORAGE);
+                populateSelect('cpu', data.body.CPU);
+                populateSelect('gpu', data.body.GPU);
+                populateSelect('ram', data.body.RAM);
+                populateSelect('operating_system', data.body.OPERATING_SYSTEM);
+                populateSelect('screen_size', data.body.SCREEN_SIZE);
+                populateSelect('screen_type', data.body.SCREEN_TYPE);
+                populateSelect('screen_resolution', data.body.SCREEN_RESOLUTION);
+                populateSelect('front_camera', data.body.FRONT_CAMERA);
+                populateSelect('rear_camera', data.body.REAR_CAMERA);
+                //others
+            } else {
+                window.location.href = data.redirectUrl;
+            }
+        })
+        .catch(error => {
+            // document.getElementById('errorMsg').innerText = error.message || 'An unexpected error occurred.';
+            console.error('Error:', error);
+        });
+
+        callAndGetListingData();
+    });
+
+
+    document.getElementById('itemFilter1').addEventListener('submit', function (event) {
+        event.preventDefault();
+        console.log("in seller-filter submission")
+
+        callAndGetListingData();
+    });
+
+
+</script>
+
+</html>

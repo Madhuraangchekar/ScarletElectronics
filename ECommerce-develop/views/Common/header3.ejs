@@ -1,0 +1,101 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="../../public/landing_page/app/scss/style.css">
+
+<header class = "header">
+    <div class="overlay has-fade"></div>
+
+    <nav class="container2 flex flex-ai-c flex-jc-sb">
+      <a href="/users/home" class="header__logo">
+        <img src="../../public/landing_page/images/logo_med.svg" alt="scarletElectronics" 
+        >
+      </a>
+
+      <a id="btnHamburger" class="header__toggle hide-for-desktop " >
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+
+      <div class="header__links hide-for-mobile">
+        <a href="/users/home">Home</a>
+        <a href="/item-listing/listings" id="link_catalogue">Catalogue</a>
+        <a href="/users/support">Support</a>
+        <a href="/staff-login/login">Staff Login</a>
+        <a href="#">Deals</a>
+        <a href="#">Services</a>
+      </div>
+
+      <div class="header__cart hide-for-mobile hearder__cart__btn flex flex-jc-c flex-ai-c"> 
+        <button href="#" class="hearder__cart__btn flex flex-jc-c flex-ai-c"><img class="header__cart__icon" src="../../public/landing_page/images/cart.png" alt="shopping cart"></button>
+      </div>
+
+      <div id="user-login-container">
+        <!-- <div class="header__links hide-for-mobile">
+          <a href="/users/profile">Profile</a>
+          <a href="/users/logout">Logout</a>
+        </div>
+        
+        <form action="/users/login" method="get">
+          <button type="submit" class="button header__cta hide-for-mobile">Register/ Login</button>
+        </form> -->
+      </div>
+    </nav>
+
+    <div class="header__menu has-fade hide-for-desktop">
+      <a href="#">Home</a>
+      <a href="#">Catalogue</a>
+      <a href="#">Deals</a>
+      <a href="#">Services</a>
+      <a href="#">Register</a>
+    </div>
+
+    <script>
+
+      $(document).ready(function() {
+          $.ajax({
+              type: "GET",
+              url: "/users", // Replace with the actual endpoint
+              success: function(response) {
+                  if (response.success) {
+                      var user = response.body;
+                      console.log("User logged in!");
+                      updateLoggedInUI(user);
+                  } else {
+                      console.log("Something wrong in checking login. Check if user logged in successful!");
+                      updateLoggedOutUI();
+                  }
+              },
+              error: function(error) {
+                  console.error('Error checking login status:', error);
+                  console.log("User logged out!");
+                  updateLoggedOutUI();
+              }
+          });
+      
+          function updateLoggedInUI(user) {
+              $('#user-login-container').html(`
+                  <div class="header__links hide-for-mobile">
+                    <a>Welcome ${user.name}</a>
+                    <a href="/users/profile">Profile</a>
+                    <!-- <a href="/users/modify-user">Profile</a>-->
+                    <a href="/users/logout">Logout</a>
+                  </div>
+              `);
+          }
+      
+          function updateLoggedOutUI() {
+              // Update the UI for a logged-out user
+              $('#user-login-container').html(`
+                  <form action="/users/login" method="get">
+                    <button type="submit" class="button header__cta hide-for-mobile">Register/ Login</button>
+                  </form>
+              `);
+          }
+      
+      });
+      
+    </script>
+
+</header>

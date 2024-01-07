@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Create Customer Representative</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <%- include('Common/admin_header.ejs') %>
+
+    <div align="center">
+        <br> <br>
+        <h1 class="text-primary text-center mx-auto">Create Customer Representative</h1>
+        <br>
+        <h2 class="text-center"></h2>
+        <form id="create" method="POST" action="/admin/insert-customer-rep" onsubmit="formatDate()">
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="name" class="form-label text-left">Name</label> <input type="text"
+                    class="form-control text-left" id="name" name="name" onchange="allLetter('a')" required>
+            </div>
+            <br>
+
+            <br>
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="emailId" class="form-label">Email:</label> <input type="email" class="form-control"
+                    id="emailId" name="emailId" name="email" placeholder="Enter Your Email" onchange="validateEmail();">
+                <div id="emailHelp" class="form-text">We'll never share your
+                    email with anyone else.</div>
+            </div>
+            <br>
+
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="password" class="form-label text-left">Password</label>
+                <input type="password" class="form-control text-left" id="password" name="password"
+                    onchange="passid_validation(7,12);" required>
+                <p style="font-size: small;" class="form-text">Password should contains 7 to 12 characters, atleast one
+                    Capital letter, atleast one digit, atleast one special character</p>
+            </div>
+            <br>
+            
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="ssn" class="form-label text-left">SSN</label>
+                <input type="number" class="form-control text-left" id="ssn" name="ssn" onchange="validateSSN()" required>
+            </div>
+            <br>
+            
+            <div class="col-md-3 align-self-center mx-auto">
+                <label for="designation" class="form-label text-left">Designation</label> <input type="text"
+                    class="form-control text-left" id="designation" name="designation" onchange="allLetter('a')" required>
+            </div>
+            <br>
+           
+            <br> <br>
+            <div class="col-md-3 text-center mx-auto">
+                <button type="submit" class="btn btn-primary align-self-center">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+
+        document.getElementById('create').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var yourData = {
+                    name: document.getElementById('name').value,
+                    emailId: document.getElementById('emailId').value,
+                    password: document.getElementById('password').value,
+                    ssn: document.getElementById('ssn').value,
+                    designation: document.getElementById('designation').value,
+                    // ... (add other form fields)
+                };
+
+            fetch('/admin/insert-customer-rep', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(yourData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Redirect based on the server response
+                        window.location.href = data.redirectTo || '/admin/dashboard';
+                    } else {
+                        // Handle error case
+                        console.error('Server response indicates failure:', data.message);
+                    }
+                })
+                .catch(error => {
+                    // Handle fetch error
+                    console.error('Error during fetch:', error);
+                });
+
+
+
+
+        });
+
+    </script>
+<!-- 
+    <script src="formValidation.js"></script> -->
+    <script type="text/javascript">
+        // Your existing JS code here
+
+        function formatDate() {
+            // Get the input element
+            var dobInput = document.getElementById('dob');
+
+            // Get the entered value
+            var inputValue = dobInput.value;
+
+            // Split the entered value by "/"
+            var dateParts = inputValue.split('/');
+
+            // Rearrange the parts to match "YYYY-MM-DD" format
+            var formattedDate = dateParts[2] + '-' + dateParts[0] + '-' + dateParts[1];
+            console.log('Formatted Date:', formattedDate);
+
+            // Set the formatted date back to the input
+            dobInput.value = formattedDate;
+        }
+    </script>
+
+    <script>
+        function validateSSN() {
+            var ssnInput = document.getElementById('ssn');
+            var ssnPattern = /^\d{9}$/; // Change the regex to match 9 digits without hyphens
+
+            if (ssnPattern.test(ssnInput.value)) {
+                // Valid SSN format
+                ssnInput.setCustomValidity('');
+            } else {
+                // Invalid SSN format
+                ssnInput.setCustomValidity('Please enter a valid 9-digit SSN');
+            }
+        }
+
+        function passid_validation(mx, my) {
+            var strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/;
+            var passid = document.getElementById("password").value;
+
+            var passid_len = passid.length;
+            if (passid_len == 0) {
+                alert("Password should not be empty");
+                //document.registration.passid.focus();
+                return false;
+            }
+            else if (passid_len >= my || passid_len < mx) {
+                alert("Password Length should be between " + mx + " to " + my);
+                //document.registration.passid.focus();
+                return false;
+            }
+            else if (!strongPasswordRegex.test(passid)) {
+                alert("Password not satisfy all the criteria");
+                //document.registration.passid.focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>

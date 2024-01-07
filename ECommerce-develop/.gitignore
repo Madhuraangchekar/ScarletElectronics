@@ -1,0 +1,15 @@
+.env
+.DS_Store
+util/scarletelectronics-key.json
+routes/try.js
+config/
+node_modules/
+package-lock.json/
+node_modules/.package-lock.json
+uploads/
+routes/try copy.js
+.env
+views/tryy.ejs
+node_modules/googleapis-common/node_modules/.bin/uuid
+views/Common/mainheader.ejs
+views/Common/common_header.ejs

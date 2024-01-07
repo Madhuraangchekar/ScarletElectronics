@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>CheckOut</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/landing_page/app/css/payments.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="../public/landing_page/app/js/paymentScript.js" defer></script>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+
+<body align="center">
+    <%- include('Common/header2.ejs') %>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center">Checkout Summary</h2>
+            </div>
+        </div>
+    
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead class="table-primary">
+                        <tr>
+                            <th class="text-center">Item Name</th>
+                            <th class="text-center">Quantity (Qty)</th>
+                            <th class="text-center">Per Item Cost</th>
+                            <th class="text-center">Total Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dynamicTable">
+                        <!-- Table rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <div class="row mt-3">
+            <div class="col-md-6 offset-md-6">
+                <table class="table table-bordered">
+                    <tr>
+                        <td colspan="3" class="text-center font-weight-bold">Total Cost</td>
+                        <td class="text-center font-weight-bold" id="totalprice"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-center font-weight-bold">Promo Code</td>
+                        <td class="text-center font-weight-bold" id="promocode"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-center font-weight-bold">Sales Tax</td>
+                        <td class="text-center font-weight-bold" id="salestax"></td>
+                    </tr>
+                    <tr class="table-active">
+                        <td colspan="3" class="text-center font-weight-bold">Final Cost</td>
+                        <td class="text-center font-weight-bold" id="finalcost"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <form id="payment-form" class="col-md-3 text-center mx-auto">
+        <div id="payment-element">
+            <!--Stripe.js injects the Payment Element-->
+        </div>
+        <button id="submit">
+            <div class="spinner hidden" id="spinner"></div>
+            <span id="button-text">Pay now</span>
+        </button>
+        <div id="payment-message" class="hidden"></div>
+    </form>
+    <br> <br>
+    <script>
+        function moveToCart()
+        {
+            window.history.back();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() 
+        {
+            event.preventDefault();
+			
+            
+            fetch(`/cart/fetch-cart`)
+            .then(response => response.json())
+			.then(data => 
+            {
+                if (data) 
+                {
+                    // console.log(".....",data);
+                    cartDetails = data['cartDetails'];
+                    TotalPrice = data['TotalPrice'];
+                    console.log(TotalPrice);
+                    Promocode = data['Promocode'];
+                    Sales = data['Sales'];
+                    FinalPrice = data['FinalPrice'];
+                    // console.log(typeof data['cartDetails']);
+                    const dynamicTable = document.getElementById('dynamicTable');
+                    const totalprice = document.getElementById('totalprice');
+                    const promocode = document.getElementById('promocode');
+                    const salestax = document.getElementById('salestax');
+                    const finalcost = document.getElementById('finalcost');
+                    let rowCounter = 0;
+
+                    totalprice.textContent = TotalPrice + ' $';
+                    promocode.textContent = Promocode+ ' $';
+                    salestax.textContent = Sales+ ' $';
+                    finalcost.textContent = FinalPrice+ ' $';
+
+                    cart_row_reference = [];
+                    for (const itemData of cartDetails) {
+                        rowCounter++;
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                        <tr>
+                            <td class="w-25 text-center">
+                                <label for="item${rowCounter}">${itemData.name}</label>
+                            </td>
+                            <td class="w-25 text-center">
+                                <label for="item${rowCounter}">${itemData.quantity}</label>
+                            </td>
+                            <td class="w-25 text-center">
+                                <label for="item${rowCounter}">${itemData.price} $</label>
+                            </td>
+                            <td class="w-25 text-center">
+                                <label for="item${rowCounter}">${itemData.totalPrice} $</label>
+                            </td>
+                        <tr>
+                        `;
+                        dynamicTable.appendChild(newRow);
+                    }
+                }
+			});
+        });
+
+    </script>
+        
+</body>
+</html>

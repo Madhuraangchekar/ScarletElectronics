@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../public/landing_page/images/favicon-32x32.png">
+  
+  <!-- Font Used -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <!-- End of Font Used -->
+
+  <!--- CSS link -->
+  <link rel="stylesheet" href="../public/landing_page/app/scss/style.css">
+
+  
+  <title>Scarlet Electronics | landing page</title>
+
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+
+<body class="body_flex">
+  <header class = "header">
+    <div class="overlay has-fade"></div>
+
+    <!-- Nav Bar -->
+    <nav class="flex flex-jc-sb flex-ai-s flex-ai-c">
+      <div class="header__logo">      
+        <a href="/">  <!-- Logo Image -->
+        <img src="../public/landing_page/images/logo_med.svg" alt="scarletElectronics" 
+        ></a>
+      </div>
+
+      <!-- Mobile end Hamburger Menu -->
+      <div class = "container">
+        <a class="header__toggle container hide-for-desktop" id="btnHamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+      </div>
+      
+      <!-- PC end nav bar subject to change -->
+      <div class="flex flex-ai-s flex-jc-sb flex-ai-c hide-for-mobile header__list_bin">
+        <div class="header__links"><a href="/users/home">Home</a></div>
+        <div class="header__links"><a href="/item-listing/listings">Catalogue</a></div>
+        <div class="header__links"><a href="#">Services</a></div>
+        <div class="header__links"><a href="#">Contact</a></div>
+      </div>
+
+      <div class="flex flex-ai-s flex-jc-sb flex-ai-c hide-for-mobile">
+          <div class="header__user-action"> <button class="header__cart__bin" href="#"><img class="header__cart__icon" src="../public/landing_page/images/cart.png" alt="shopping cart"></button> </div>
+          <div class="header__user-action"><form action="/users/login" method="get">
+            <button type="submit" class="button header__cta">Register/ Login</button>
+          </form><div>
+      </div>
+
+    </nav>
+    <!-- End of Nav Bar -->
+
+    <div class="header__menu has-fade hide-for-desktop">
+      <!-- Hamburger menu for small viewport -->
+      <a href="/users/home">Home</a>
+      <a href="/item-listing/listings">Catalogue</a>
+      <a href="#">Services</a>
+      <a href="#">Contact</a>
+      <a href="#">Cart</a>
+      <a href="/users/login" method="get">Register/ Login</a>
+    </div>
+
+  <div class="content">
+    <section class="search">
+      <!--search bar -->
+      <div class="search__bin flex flex-jc-c flex-ai-c">
+        <form action="" class="search__bar flex flex-jc-c flex-ai-c">
+          <input class="search__input" type="text" placeholder="Search our catalogue!" name="q">
+          <button class="search__button flex flex-jc-c flex-ai-c" type="submit"><img class="search__icon" src="../public/landing_page/images/search.png" alt="search"></button> 
+        </form>
+      </div>
+    </section>
+
+    <section class="hero"> 
+      <!-- Image Slider -->
+      <div class="slider">
+        <div class="slider__bin">
+          <div class="slider__images flex">
+            <input type="radio" name="slider" id="img1" checked>
+            <input type="radio" name="slider" id="img2">
+            <input type="radio" name="slider" id="img3">
+            <input type="radio" name="slider" id="img4">
+
+            <img src="../public/landing_page/images/electronics2.jpg" class="slider__image slider__image1" alt="img1">
+            <img src="../public/landing_page/images/electronics3.jpg" class="slider__image slider__image2" alt="img2">
+            <img src="../public/landing_page/images/electronics4.jpg" class="slider__image slider__image3" alt="img3">
+            <img src="../public/landing_page/images/electronics5.webp" class="slider__image slider__image4" alt="img4">
+          </div>
+
+          <div class="slider__buttons">
+            <label for="img1"></label>
+            <label for="img2"></label>
+            <label for="img3"></label>
+            <label for="img4"></label>
+          </div>
+        </div>
+      </div>
+      <!--End of Image Slider -->
+
+      <!-- text -->
+
+        <div class="hero__text">
+          <h2>Welcome to Scarlet Electronics!</h2>
+          <p style="color: red;">Red Hot, Quality Electronics Guaranteed!</p>
+        </div>
+    
+    </section>
+
+  </div>
+
+
+  <!--JS link -->
+  <script src="../public/landing_page/app/js/script.js"></script>
+
+  <%- include('Common/footer.ejs') %>
+</body>
+</html>

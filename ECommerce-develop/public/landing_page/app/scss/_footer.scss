@@ -1,0 +1,37 @@
+.footer {
+    background-color: $brandBlack;
+    padding: .8rem;
+    text-align: center;
+
+    > *p {
+        font-size: smaller;
+        color: $brandWhite;
+        text-align: center;
+    }
+    
+    // &__text {
+
+    // }
+
+    &__social {
+        display: inline-block;
+        a:not(:last-child) {
+            margin-right: .8rem;
+        }
+    }
+
+    & hr {
+        color: $brandRed;
+    }
+
+
+    &__disclaimer {
+        font-size: small;
+        opacity: .7;
+
+        #rights {
+            font-size: x-small;
+        }
+    }
+
+}

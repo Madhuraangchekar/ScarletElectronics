@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Purchase History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .table-container {
+            overflow-x: auto;
+        }
+        .table {
+            width: 100%;
+            max-width: 100%;
+        }
+        .table th, .table td {
+            width: 100vw;
+            white-space: wrap;
+        }
+    </style>
+
+</head>
+
+<body align="center">
+    <%- include('Common/header2.ejs') %>
+<br> <br>
+<h1 class="text-center mx-auto">Purchase History</h1>
+<!-- <div>
+    <ul class="nav">
+        <li class="nav-item">
+            <form action="/item-listing/listings" method="get">
+                <button type="submit" class="btn btn-primary">
+                    Home
+                </button>
+            </form>
+        </li>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <li class="nav-item">
+            <form action="/users/profile" method="get">
+                <button type="submit" class="btn btn-primary">
+                    Go Back to Profile Page
+                </button>
+            </form>
+        </li>
+    </ul>
+</div> -->
+<form action="/users/view-order" method="get" name="orderDetailsForm" style="display: none;">
+    <input type="hidden" id="orderIdInput" name="orderId">
+</form>
+
+<div style="width: 100vw; height: 100 vh; margin: 0; padding: 20px;">
+<% if (Object.keys(purchaseMap).length > 0) { %>
+    <table class="table table-bordered">
+        <thead>
+        <tr class="table-primary">
+            <th class="w-15 text-center align-middle">Purchase No.</th>
+            <th class="w-15 text-center align-middle">Items in this Purchase</th>
+            <th class="w-15 text-center align-middle">Payment ID</th>
+            <th class="w-15 text-center align-middle">Total Price</th>
+            <th class="w-15 text-center align-middle">Order Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% Object.keys(purchaseMap).forEach(function (purchaseId, index) { %>
+            <tr>
+                <td class="w-15 text-center align-middle"><%= index + 1 %></td>
+                <td class="w-15 text-center align-middle"><%= purchaseMap[purchaseId].itemCount %></td>
+                <td class="w-15 text-center align-middle"><%= purchaseMap[purchaseId].paymentId %></td>
+                <td class="w-15 text-center align-middle"><%= purchaseMap[purchaseId].totalPrice %></td>
+                <td>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="w-15 text-center align-middle" >Item Name</th>
+                            <th class="w-15 text-center align-middle" >Shipment ID</th>
+                            <th class="w-15 text-center align-middle" >Tracking ID</th>
+                            <th class="w-15 text-center align-middle" >Quantity</th>
+                            <th class="w-15 text-center align-middle" >Cost of Item</th>
+                            <th class="w-15 text-center align-middle" >Return Shipment ID</th>
+                            <th class="w-15 text-center align-middle" >Actions</th>
+
+                            <!-- Add more columns based on your actual orderDetails structure -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% purchaseMap[purchaseId].orderDetails.forEach(function (orderDetail) { %>
+                            <tr>
+                                <td class="w-15 text-center align-middle"><a href="http://localhost:3000/item-listing/catalog?item-id=<%= orderDetail.listingId %>" ><%= orderDetail.name %></a></td>
+                                <td class="w-15 text-center align-middle"><%= orderDetail.shipmentId %></td>
+                                <td class="w-15 text-center align-middle"><a href="<%= orderDetail.trackingUrl %>" >Track Here!</a></td>
+                                <td class="w-15 text-center align-middle"><%= orderDetail.quantity %></td>
+                                <td class="w-15 text-center align-middle"><%= orderDetail.total_cost_of_item %></td>
+                                <td class="w-15 text-center align-middle"><%= orderDetail.return_shipment %></td>
+                                <td class="w-15 text-center align-middle">
+                                    <form action="/users/return-order" name="returnForm" method="get">
+                                        <input type="hidden" name="orderIdInput" value="<%= orderDetail.orderId %>">
+                                        <% if (orderDetail.order_status === 'in transit') { %>
+                                            <button type="button" class="btn btn-primary" onclick="returnOrder('<%= orderDetail.orderId %>')">
+                                                Return Order
+                                            </button>
+                                        <% } %>
+                                        <% if (orderDetail.order_status === 'return requested') { %>
+                                               <b>Return Requested</b>
+                                        <% } %>
+                                    </form>
+                                </td>
+
+                                <!-- Add more columns based on your actual orderDetails structure -->
+                            </tr>
+                        <% }); %>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+<% } else { %>
+    <p>No purchase history available.</p>
+<% } %>
+
+<br> <br>
+<script>
+
+    function returnOrder(orderId) {
+        debugger;
+        if (confirm("Are you sure you want to return?")) {
+            // document.getElementById('orderId').value = orderId;
+            window.location.href = '/users/return-order?orderId=' + orderId;
+            // document.forms['returnForm'].submit();
+        } else {
+            // do nothing
+        }
+    }
+    function viewOrderDetails(rowCounter) {
+        const orderId = document.getElementById(`orderIdInput${rowCounter}`).value;
+        document.getElementById('orderIdInput').value = orderId;
+        document.forms['orderDetailsForm'].submit();
+    }
+
+    // function returnOrder(button) {
+    //     const listingId = button.parentElement.parentElement.children[0].value;
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('POST', '/users/return-order', true);
+    //     xhr.setRequestHeader('Content-Type', 'application/json');
+    //     const data = JSON.stringify({ listingId: listingId });
+    //
+    //     xhr.onreadystatechange = function () {
+    //         if (xhr.readyState == 4 && xhr.status == 200) {
+    //             console.log(xhr.responseText);
+    //             window.location.reload();
+    //         }
+    //     };
+    //
+    //     xhr.send(data);
+    // }
+    //
+    // function cancelReturn(button) {
+    //     const listingId = button.parentElement.parentElement.children[0].value;
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('POST', '/users/cancel-return', true);
+    //     xhr.setRequestHeader('Content-Type', 'application/json');
+    //     const data = JSON.stringify({ listingId: listingId });
+    //
+    //     xhr.onreadystatechange = function () {
+    //         if (xhr.readyState == 4 && xhr.status == 200) {
+    //             console.log(xhr.responseText);
+    //             window.location.reload();
+    //         }
+    //     };
+    //
+    //     xhr.send(data);
+    // }
+</script>
+
+</body>
+</html>

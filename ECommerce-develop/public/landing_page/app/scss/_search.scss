@@ -1,0 +1,41 @@
+.search {
+    background-color: $brandBlack;
+    padding: .8rem;
+
+    &__bin{
+        width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    &__bar{
+        min-width: 15rem;
+        width: 30rem;
+        background: $white;
+        padding: .6rem 1.675rem;
+        border-radius: 2.2rem;
+    }
+
+    &__input{
+        color: $brandBlack;
+        text-align: left;
+        font-weight: 500;
+        border: 0;
+        flex: 1;
+        background: transparent;
+        outline: none;
+    }
+
+    &__button{
+        border: 0;
+        background: $brandRed;
+        border-radius: 50%;
+        width: .8rem;
+        height: .8rem;
+    }
+
+    &__icon{
+        width: 1.675rem;
+        border-radius: 50%;
+    }
+}
